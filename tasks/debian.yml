@@ -1,0 +1,24 @@
+---
+
+- name: "[DEBIAN] updating aptitude cache ..."
+  apt:
+    update_cache: yes
+  become: yes
+
+- name: "[DEBIAN] installing packages with apt ..."
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ sys_packages }}"
+  become: yes
+
+- name: "[DEBIAN] remove useless packages from apt cache ..."
+  apt:
+    autoclean: yes
+  become: yes
+
+- name: "[DEBIAN] installing packages with pip ..."
+  pip:
+    name: "{{ item }}"
+  with_items: "{{ pip_packages }}"
+  become: yes
